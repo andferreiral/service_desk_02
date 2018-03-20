@@ -8,6 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import br.usjt.arqsw.entity.Chamado;
 import br.usjt.arqsw.entity.Fila;
 /**
@@ -15,14 +20,24 @@ import br.usjt.arqsw.entity.Fila;
  * @author Andrey
  *
  */
+@Repository
 public class ChamadoDAO {
+	private Connection conn;
+	
+	@Autowired
+	public ChamadoDAO(DataSource dataSource) throws IOException{
+		try{
+			this.conn = dataSource.getConnection();
+		}catch(SQLException e){
+			throw new IOException(e);
+		}
+	}
 
 	public int criarChamado(Chamado chamado) throws IOException {
 		int id = -1;
 		String sql = "INSERT INTO chamado (descricao, status, dt_abertura, id_fila) VALUES (?,?,?,?)";
 		String sql1 = "SELECT LAST_INSERT_ID()";
-		try(Connection conn = ConnectionFactory.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql);){
+		try(PreparedStatement stmt = conn.prepareStatement(sql);){
 			stmt.setString(1, chamado.getDescricao());
 			stmt.setString(2, chamado.getStatus());
 			stmt.setDate(3, new Date(chamado.getDataAbertura().getTime()));
@@ -50,8 +65,7 @@ public class ChamadoDAO {
 		String sql = "SELECT c.ID_CHAMADO, c.DESCRICAO, c.STATUS, c.DT_ABERTURA, c.DT_FECHAMENTO, f.NM_FILA"
 				+ " FROM chamado c INNER JOIN fila f ON c.ID_FILA = f.ID_FILA WHERE c.ID_FILA = ?";
 
-		try (Connection conn = ConnectionFactory.getConnection(); 
-				PreparedStatement stm = conn.prepareStatement(sql);) {
+		try (PreparedStatement stm = conn.prepareStatement(sql);) {
 			stm.setInt(1, fila.getId());
 			try (ResultSet rs = stm.executeQuery();) {
 

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.usjt.arqsw.dao.ChamadoDAO;
 import br.usjt.arqsw.entity.Chamado;
 import br.usjt.arqsw.entity.Fila;
@@ -12,11 +15,13 @@ import br.usjt.arqsw.entity.Fila;
  * @author Andrey
  *
  */
+@Service
 public class ChamadoService {
 	private ChamadoDAO dao;
 	
-	public ChamadoService(){
-		this.dao = new ChamadoDAO();
+	@Autowired
+	public ChamadoService(ChamadoDAO dao){
+		this.dao = dao;
 	}
 	
 	public int criarChamado(Chamado chamado) throws IOException{
