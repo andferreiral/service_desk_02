@@ -1,8 +1,14 @@
 package br.usjt.arqsw.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
  
@@ -11,13 +17,12 @@ import javax.validation.constraints.Size;
  * @author Andrey
  *
  */
-public class Chamado implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@Entity
+public class Chamado {
 	
-	public static final String ABERTO = "aberto";
-	public static final String FECHADO = "fechado";
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_chamado")
 	@NotNull(message="O chamado não pode ser nulo")
 	private int numero;
 	
@@ -26,16 +31,22 @@ public class Chamado implements Serializable {
 	private String descricao;
 	
 	@NotNull
+	@Column(name="dt_abertura")
 	private Date dataAbertura;
 	
-	
+	@Column(name="dt_fechamento")
 	private Date dataFechamento;
 	
 	@NotNull
 	private String status;
 	
 	@NotNull
+	@ManyToOne
+	@JoinColumn(name="id_fila")
 	private Fila fila;
+	
+	public static final String ABERTO = "aberto";
+	public static final String FECHADO = "fechado";
 	
 	public int getNumero() {
 		return numero;

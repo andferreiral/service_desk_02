@@ -1,8 +1,9 @@
 package br.usjt.arqsw.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import br.usjt.arqsw.service.FilaService;
  * @author Andrey
  *
  */
+@Transactional
 @Controller
 public class ManterChamadosController {
 	private FilaService filaService;
@@ -36,14 +38,15 @@ public class ManterChamadosController {
 		return "index";
 	}
 
-	private ArrayList<Fila> listarFilas() throws IOException{
+	private List<Fila> listarFilas() throws IOException{
 			return filaService.listarFilas();
 	}
 	
 	@RequestMapping("/listar_filas_exibir")
 	public String listarFilasExibir(Model model) {
 		try {
-			model.addAttribute("filas", listarFilas());
+			List<Fila> filas = filaService.listarFilas();
+			model.addAttribute("filas", filas);
 			return "ChamadoListar";
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -74,7 +77,7 @@ public class ManterChamadosController {
 			fila = filaService.carregar(fila.getId());
 			model.addAttribute("fila", fila);
 			
-			ArrayList<Chamado> chamados = chamadoService.listarChamados(fila);
+			List<Chamado> chamados = chamadoService.listarChamados(fila);
 			model.addAttribute("chamados", chamados);
 			return "ChamadoListarExibir";
 			}
@@ -87,7 +90,7 @@ public class ManterChamadosController {
 	
 	@RequestMapping("/novo_chamado")
 	public String criarChamado(@Valid Chamado chamado, BindingResult result, Model model) {
-		/*if (result.hasErrors()) {
+		if (result.hasFieldErrors("descricao")) {
 			try {
 				model.addAttribute("lista", listarFilas());
 				return "NovoChamado";
@@ -95,7 +98,7 @@ public class ManterChamadosController {
 				e.printStackTrace();
 				return "Erro";
 			}
-		} else {*/
+		} else {
 			try {
 				int id = chamadoService.criarChamado(chamado);
 				chamado.setNumero(id);
@@ -107,4 +110,4 @@ public class ManterChamadosController {
 		}
 	}
 
-//}
+}

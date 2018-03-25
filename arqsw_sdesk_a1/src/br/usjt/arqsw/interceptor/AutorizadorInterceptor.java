@@ -19,10 +19,11 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object controller)
 			throws Exception {
 
+		@SuppressWarnings("unused")
 		String path = request.getContextPath();
 		String uri = request.getRequestURI();
 
-		if (uri.contains("css") || uri.contains("js") || uri.contains("img") || uri.contains("jpg")
+		if (uri.contains("css") || uri.contains("js") || uri.contains("jpg")
 				|| uri.contains("html") || uri.contains("index")) {
 			return true;
 		}
