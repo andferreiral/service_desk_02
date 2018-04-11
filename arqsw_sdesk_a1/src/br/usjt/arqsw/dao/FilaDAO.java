@@ -35,4 +35,12 @@ public class FilaDAO {
 		return manager.find(Fila.class, id);
 	}
 	
+	public void alterar(Fila fila) throws IOException {
+		manager.merge(fila);
+	}
+	
+	public void excluir(Fila fila) throws IOException {
+		manager.remove(fila);
+	}
+	
 }

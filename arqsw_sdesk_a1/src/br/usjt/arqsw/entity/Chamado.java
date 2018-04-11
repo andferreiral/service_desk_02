@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
  
 /**
  * 
@@ -30,10 +32,12 @@ public class Chamado {
 	@Size(max=100,min=10, message="O tamanho da descrição deve estar entre 10 e 100 caracteres")
 	private String descricao;
 	
+	@JsonFormat(pattern="dd-MM-yyyy")
 	@NotNull
 	@Column(name="dt_abertura")
 	private Date dataAbertura;
 	
+	@JsonFormat(pattern="dd-MM-yyyy")
 	@Column(name="dt_fechamento")
 	private Date dataFechamento;
 	

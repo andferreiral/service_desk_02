@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <!-- Barra superior com os menus de navegação -->
+    <!-- Barra superior com os menus de navegaÃ§Ã£o -->
     <c:import url="Menu.jsp" />
     
     <!-- Container Principal -->
@@ -28,8 +28,8 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Número</th>
-                            <th>Descrição</th>
+                            <th>NÃºmero</th>
+                            <th>DescriÃ§Ã£o</th>
                             <th>Abertura</th>
                             <th>Fechamento</th>
                             <th>Status</th>

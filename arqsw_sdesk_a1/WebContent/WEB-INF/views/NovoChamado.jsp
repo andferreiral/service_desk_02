@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <!-- Barra superior com os menus de navegação -->
+    <!-- Barra superior com os menus de navegaÃ§Ã£o -->
     <c:import url="Menu.jsp" />
     
     <!-- Container Principal -->
@@ -24,7 +24,7 @@
 		<form action="novo_chamado" method="post">
             <div class="row">
                 <div class="form-group col-md-12">
-                    <label for="descricao">Descrição:</label>
+                    <label for="descricao">DescriÃ§Ã£o:</label>
                     <input type="text" class="form-control" name="descricao" required maxlength="100" placeholder="descri&ccedil;&atilde;o do chamado">
                     <form:errors path="chamado.descricao" cssStyle="color:red"/>
                 </div>

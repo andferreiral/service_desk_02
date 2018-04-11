@@ -1,5 +1,6 @@
 package br.usjt.arqsw.dao;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -44,6 +45,10 @@ public class ChamadoDAO {
 		List<Chamado> result = query.getResultList();
 		
 		return result;
+	}
+
+	public List<Chamado> listarChamados() throws IOException{
+		return manager.createQuery("select c from Chamado c").getResultList();
 	}
 
 }
