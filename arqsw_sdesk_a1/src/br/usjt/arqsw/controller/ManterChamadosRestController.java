@@ -1,6 +1,7 @@
 package br.usjt.arqsw.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -33,10 +34,10 @@ public class ManterChamadosRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "rest/chamados")
-	public @ResponseBody List<Chamado> listarChamados() {
+	public @ResponseBody List<Chamado> listarTodosChamados() {
 		List<Chamado> chamados = null;
 		try {
-			chamados =  cService.listarChamados();
+			chamados =  cService.listarTodosChamados();
 		} catch (IOException e) {
 			e.printStackTrace();
 
@@ -57,6 +58,32 @@ public class ManterChamadosRestController {
 		return chamados;
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "rest/chamados/abertos/{id}")
+	public @ResponseBody List<Chamado> listarChamadosAbertos(
+			@PathVariable("id") Long id) {
+		List<Chamado> chamados = null;
+		try {
+			@SuppressWarnings("unused")
+			Fila fila = fService.carregar(id.intValue());
+			chamados = cService.listarTodosChamados();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return chamados;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "rest/filas")
+	public @ResponseBody List<Fila> listarFilas() {
+		List<Fila> filas = null;
+		try {
+			filas = fService.listarFilas();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return filas;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Transactional
 	@RequestMapping(method=RequestMethod.POST, value="rest/chamado")
 	public ResponseEntity<Chamado> criarChamado(@RequestBody Chamado chamado){
@@ -67,6 +94,20 @@ public class ManterChamadosRestController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new ResponseEntity(chamado, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@Transactional
+	@RequestMapping(method = RequestMethod.PUT, value = "rest/chamados")
+	public void fecharChamados(@RequestBody List<Chamado> chamados) {
+		try {
+			ArrayList<Integer> lista = new ArrayList<>();
+			for(Chamado chamado:chamados){
+				lista.add(chamado.getNumero());
+			}
+			cService.fecharChamados(lista);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

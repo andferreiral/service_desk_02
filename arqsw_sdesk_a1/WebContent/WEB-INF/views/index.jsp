@@ -22,7 +22,7 @@
         <div class="jumbotron">
             <h1> Sistema de Chamados </h1>
             <p>Arquitetura de Software</p>
-            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> USJT - 2018
+            <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> ARQDSFW - USJT - 2018
         </div>
     </div>
     <script src="js/jquery.min.js"></script>

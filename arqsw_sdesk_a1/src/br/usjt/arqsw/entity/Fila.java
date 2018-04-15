@@ -21,7 +21,7 @@ public class Fila{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_fila")
-	@NotNull(message="A fila n�o pode ser vazia")
+	@NotNull(message="A fila não pode ser vazia")
 	@Min(value=1, message="A fila não pode ser vazia")
 	private int id;
 	
